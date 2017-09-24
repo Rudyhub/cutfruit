@@ -5,6 +5,7 @@ var audios = {};
 function getAudio(){
     for(var k in ready.source.audio){
         audios[k] = document.getElementById(k);
+        audios[k].setAttribute('src',ready.source.audio[k]);
     }
 }
 

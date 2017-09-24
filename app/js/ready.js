@@ -99,7 +99,7 @@ function ready(complete){
         for(var i=0,len=audios.length; i<len; i++){
             var audio = document.createElement('audio');
             audio.setAttribute('src',audiopath + audios[i] +'.mp3');
-            audio.setAttribute('preload', true);
+            audio.setAttribute('preload', 'true');
             audio.id = audios[i];
             document.body.appendChild(audio);
 

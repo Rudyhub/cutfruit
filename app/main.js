@@ -70,6 +70,7 @@ ready.load(function(){
         document.removeEventListener('touchstart', onceplay, false);
         for(var k in ready.source.audio){
             ;(function(audio){
+                audio.setAttribute('src','audio/test.mp3');
                 audio.play();
             })(document.getElementById(k));
         }
