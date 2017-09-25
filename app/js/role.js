@@ -97,6 +97,7 @@ function onThrowupEnd(role){
         if(info.life > 0){
             info.life--;
             info.update('life');
+            showLose(role.x, info.winh/2);
         }else{
             app.clearTimer();
             destroy();
@@ -104,17 +105,45 @@ function onThrowupEnd(role){
         }
     }
 }
+
+function showLose(x,y){
+    var txt = new PIXI.Text('x',{
+        fontSize: 36,
+        fontWeight: 'bold',
+        fill: ['#bb0000'],
+        align: 'center'
+    }),
+    timer;
+    txt.x = x;
+    txt.y = y;
+    app.stage.addChild(txt);
+    timer = setTimeout(function(){
+        clearTimeout(timer);
+        app.stage.removeChild(txt);
+        txt.destroy();
+    },2000);
+}
+
 function randomSelect(len){
-    var indexs = [];
-    for(var i=0; i<len; i++){
+    var indexs = [],
+        s;
+    //不让冰冻者（最后一个）被选。
+    for(var i=0; i<len-1; i++){
         indexs[i] = i;
     }
     indexs.sort(function(){
         return Math.random() > .5 ? 1 : -1;
     });
-    return indexs.slice(0, Math.floor(Math.random()*(info.max - info.min)) + info.min);
+    s = indexs.slice(0, Math.floor(Math.random()*(info.max - info.min)) + info.min);
+    //当选出的数量够多时，才有一定的概率出现冰冻者
+    if(s.length >= info.max-2 && Math.random() < .3){
+        s.push(len-1);
+    }
+
+    return s;
 }
 function create(){
+    //冰冻者一定要放在最后一个。
     var names = ['apple', 'banana', 'basaha', 'peach', 'sandia', 'boom', 'apple', 'banana', 'basaha', 'peach', 'sandia', 'boom','icebanana'],
         colors = ['#d4ff00','#ffe337','#ff1e00','#ffd021','#ff0000','#ff0000','#d4ff00','#ffe337','#ff1e00','#ffd021','#ff0000','#ff0000','#a5fcff'],
         time = info.time;
@@ -176,10 +205,14 @@ function freeze(){
             var timer = setTimeout(function(){
                 clearTimeout(timer);
                 t.start();
+                rolesContainer.alpha = 1;
             }, info.freezetime);
         })(tickers[i]);
     }
+    //使半透明，表示冰冻
+    rolesContainer.alpha = .5;
 }
+
 back = {
     onthrowup: null,
     activeRoles: getActiveRoles,
