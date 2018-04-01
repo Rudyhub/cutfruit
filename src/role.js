@@ -1,4 +1,4 @@
-const PIXI = require('PIXI');
+const PIXI = require('./pixi.min');
 const ready = require('./ready');
 const app = require('./app');
 const info = require('./info');
@@ -76,7 +76,7 @@ function _roles(names,colors){
 }
 
 function throwup(sprite){
-    var y0 = info.winh + sprite.height,
+    let y0 = info.winh + sprite.height,
         x0 = Math.random()*(info.winw - 2*sprite.width) + sprite.width,
         xt = Math.random()*(info.winw - 2*sprite.width) + sprite.width,
         dr = Math.random()>0.5 ? 1 : -1,

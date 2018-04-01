@@ -1,4 +1,4 @@
-const PIXI = require('PIXI');
+const PIXI = require('./pixi.min');
 const info = require('./info');
 /**
  * App 继承 PIXI.Application
@@ -99,16 +99,16 @@ class App extends PIXI.Application{
      */
     motion(obj, Px0, Pxt, Py0, Pyt, Vy0, T, R, fn) {
         //加速度推算： S = v0*t+1/2*a*t^2  ==> a = 2*(S-v0*t)/t^2 , S = pt-p0
-        var _this = this,
+        let _this = this,
             A = (2 * (Pyt - Py0 - Vy0 * T)) / (T * T),
             t = 0,
             Vx = (Pxt - Px0) / T;
 
         obj.y = Py0;
         obj.x = Px0;
-        var ticker = _this.timer(domotion);
+        let ticker = _this.timer(domotion);
         function domotion() {
-            var delta = ticker.elapsedMS;
+            let delta = ticker.elapsedMS;
             obj.x += delta * Vx;
             //公式：s = s2-s1; s1 = a*t1 + 1/2*a*t1^2; s2 = a*t2 + 1/2*a*t2^2; t2 = t1+delta; t1 = t;
             obj.y += Vy0*delta + t*A*delta + .5*A*delta*delta;

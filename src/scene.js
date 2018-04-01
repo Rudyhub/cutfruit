@@ -1,4 +1,4 @@
-const PIXI = require('PIXI');
+const PIXI = require('./pixi.min');
 const ready = require('./ready');
 const info = require('./info');
 const app = require('./app');
@@ -97,13 +97,13 @@ function scene2(textures){
             strs = ['score','best','life'];
         }
         for(; i<len; i++){
-            switch (str){
+            switch (strs[i]){
                 case 'score': score.text = info.score; break;
                 case 'best': best.text = info.scoreTxt + info.best; break;
                 case 'life': life.text = info.lifeTxt + info.life; break;
             }
         }
-        str = null;
+        strs = null;
     };
     scenes[1].addChild(bgimg,icon, score, best, life);
     return scenes[1];

@@ -1,4 +1,4 @@
-const PIXI = require('PIXI');
+const PIXI = require('./pixi.min');
 const ready = require('./ready');
 const app = require('./app');
 const info = require('./info');
@@ -61,7 +61,7 @@ function onstart(se){
     function onend(){
         flag = false;
         lines.splice(0,lines.length);
-        for(var i=0,len=graphics.length; i<len; i++){
+        for(let i=0,len=graphics.length; i<len; i++){
             app.stage.removeChild(graphics[i]);
         }
         app.stage.off('pointermove',onmove);
@@ -200,7 +200,7 @@ function destroy(){
     lines.splice(0, lines.length);
     let i = 0,
         len = graphics.length;
-    for(let i=0; i<len; i++){
+    for(; i<len; i++){
         graphics[i].destroy();
     }
     graphics.splice(0, len);

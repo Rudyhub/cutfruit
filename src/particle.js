@@ -1,4 +1,4 @@
-const PIXI = require('PIXI');
+const PIXI = require('./pixi.min');
 const app = require('./app');
 function create(x,y,num,color) {
     let points = [],
@@ -30,7 +30,7 @@ function create(x,y,num,color) {
     function doparticle(){
         time += ticker.elapsedMS;
 
-        for (var i = 0; i < num; i++) {
+        for (let i = 0; i < num; i++) {
             points[i].x += points[i].Vx;
             points[i].y += points[i].Vy;
             points[i].Vy += .4;

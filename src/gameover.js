@@ -1,4 +1,4 @@
-const PIXI = require('PIXI');
+const PIXI = require('./pixi.min');
 const ready = require('./ready');
 const info = require('./info');
 const app = require('./app');
