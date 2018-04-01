@@ -1,9 +1,9 @@
 const BabiliPlugin = require("babili-webpack-plugin");
 module.exports = {
-    entry:  __dirname + "/app/main.js",
+    entry:  __dirname + "/src/main.js",
     output: {
-        path: __dirname + "/public",
-        filename: "js/cutfruit.js"
+        path: __dirname,
+        filename: "cutfruit.js"
     },
     module:{
         loaders: [

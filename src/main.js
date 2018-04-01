@@ -1,11 +1,13 @@
-const info = require('./js/info');
-const app = require('./js/app');
-const ready = require('./js/ready');
-const scene = require('./js/scene');
-const role = require('./js/role');
-const cut = require('./js/cut');
-const gameover = require('./js/gameover');
-require('./css/style.css');
+const PIXI = require('pixi');
+console.log(PIXI);
+/*const info = require('./info');
+const app = require('./app');
+const ready = require('./ready');
+const scene = require('./scene');
+const role = require('./role');
+const cut = require('./cut');
+const gameover = require('./gameover');
+
 document.body.appendChild(app.view);
 
 ready.load(function(){
@@ -76,3 +78,4 @@ ready.load(function(){
         }
     },false);
 });
+*/
