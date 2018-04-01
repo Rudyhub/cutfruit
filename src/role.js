@@ -1,10 +1,11 @@
+const PIXI = require('PIXI');
 const ready = require('./ready');
 const app = require('./app');
 const info = require('./info');
 const gameover = require('./gameover');
 const audio = require('./audio');
 
-var back,
+let back,
     textures,
     rolesContainer,
     selects,
@@ -23,7 +24,7 @@ var back,
  *  x,y....对象的x,y等其他属性。
  */
 function _role(options){
-    var o = {
+    let o = {
         name: '',
         texture: null,
         cutRadius: 0,
@@ -33,13 +34,13 @@ function _role(options){
         y: 0
     };
     if(typeof options === 'object'){
-        for(var k in options) o[k] = options[k];
+        for(let k in options) o[k] = options[k];
     }
     options = null;
 
-    var role = new PIXI.Sprite();
+    let role = new PIXI.Sprite();
     role.anchor.x = role.anchor.y = .5;
-    for(var name in o){
+    for(let name in o){
         role[name] = o[name];
     }
     role.name = !o.name ? o.texture.textureCacheIds[0] : o.name;
@@ -47,12 +48,12 @@ function _role(options){
 }
 
 function _roles(names,colors){
-    var container = new PIXI.Container(),
+    let container = new PIXI.Container(),
         texture;
-    for(var i=0, len=names.length; i<len; i++){
+    for(let i=0, len=names.length; i<len; i++){
         texture = textures[ names[i] ];
         //创建碎片材质texture对象
-        var piece1, piece2, pieces = [];
+        let piece1, piece2, pieces = [];
         if(piece1 = textures[ names[i] + '-1' ]){
             pieces[0] = piece1;
         }
@@ -86,14 +87,14 @@ function throwup(sprite){
     sprite.visible = true;
     sprite.cutted = false;
     audio('throw');
-    var ticker = app.motion(sprite, x0, xt, y0, y0, v0, info.time, r, function(){
+    let ticker = app.motion(sprite, x0, xt, y0, y0, v0, info.time, r, function(){
         onThrowupEnd(sprite);
     });
     tickers.push(ticker);
 }
 
 function onThrowupEnd(role){
-    if(!role.cutted && role.name != 'boom' && info.status == 'start'){
+    if(!role.cutted && role.name !== 'boom' && info.status === 'start'){
         if(info.life > 0){
             info.life--;
             info.update('life');
@@ -107,7 +108,7 @@ function onThrowupEnd(role){
 }
 
 function showLose(x,y){
-    var txt = new PIXI.Text('x',{
+    let txt = new PIXI.Text('x',{
         fontSize: 36,
         fontWeight: 'bold',
         fill: ['#bb0000'],
@@ -125,10 +126,10 @@ function showLose(x,y){
 }
 
 function randomSelect(len){
-    var indexs = [],
+    let indexs = [],
         s;
     //不让冰冻者（最后一个）被选。
-    for(var i=0; i<len-1; i++){
+    for(let i=0; i<len-1; i++){
         indexs[i] = i;
     }
     indexs.sort(function(){
@@ -144,7 +145,7 @@ function randomSelect(len){
 }
 function create(){
     //冰冻者一定要放在最后一个。
-    var names = ['apple', 'banana', 'basaha', 'peach', 'sandia', 'boom', 'apple', 'banana', 'basaha', 'peach', 'sandia', 'boom','icebanana'],
+    let names = ['apple', 'banana', 'basaha', 'peach', 'sandia', 'boom', 'apple', 'banana', 'basaha', 'peach', 'sandia', 'boom','icebanana'],
         colors = ['#d4ff00','#ffe337','#ff1e00','#ffd021','#ff0000','#ff0000','#d4ff00','#ffe337','#ff1e00','#ffd021','#ff0000','#ff0000','#a5fcff'],
         time = info.time;
 
@@ -157,13 +158,13 @@ function create(){
     //定时抛出
     throwticker = app.timer(dothrow);
     function dothrow(){
-        if(info.status == 'start' || info.status == 'wait'){
+        if(info.status === 'start' || info.status === 'wait'){
             time += throwticker.elapsedMS;
             if(time > info.time + Math.random()*1000+500 && enablethrow){
                 selects = randomSelect(names.length);
                 selectslen = selects.length;
                 tickers.splice(0,tickers.length);
-                for(var i=0; i<selectslen; i++) {
+                for(let i=0; i<selectslen; i++) {
                     throwup(rolesContainer.children[selects[i]]);
                 }
                 if(back.onthrowup) back.onthrowup();
@@ -186,8 +187,8 @@ function destroy(){
 }
 
 function getActiveRoles(){
-    var tmp = [];
-    for(var i=0; i<selectslen; i++) {
+    let tmp = [];
+    for(let i=0; i<selectslen; i++) {
         tmp[i] = rolesContainer.children[selects[i]];
     }
     return tmp;
@@ -199,10 +200,10 @@ function getAllRoles(){
 
 function freeze(){
     tickers.push(throwticker);
-    for(var i=0, len=tickers.length; i<len; i++){
+    for(let i=0, len=tickers.length; i<len; i++){
         tickers[i].stop();
-        ;(function(t){
-            var timer = setTimeout(function(){
+        (function(t){
+            let timer = setTimeout(function(){
                 clearTimeout(timer);
                 t.start();
                 rolesContainer.alpha = 1;

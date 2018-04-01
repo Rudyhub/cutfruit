@@ -1,14 +1,15 @@
+const PIXI = require('PIXI');
 const ready = require('./ready');
 const info = require('./info');
 const app = require('./app');
 
-var img,
+let img,
     gameover;
 function create(){
     info.status = 'over';
     img = new PIXI.Sprite(ready.source.texture['game-over']);
 
-    var w = info.winw > 768 ? 420 : info.winw/2,
+    let w = info.winw > 768 ? 420 : info.winw/2,
         h = w * .55;
 
     img.anchor.x = img.anchor.y = 0.5;

@@ -1,3 +1,4 @@
+const PIXI = require('PIXI');
 const ready = require('./ready');
 const info = require('./info');
 const app = require('./app');
@@ -11,7 +12,7 @@ function scene1(textures){
     scenes[0] = new PIXI.Container();
 
     //create building
-    var building = new PIXI.Sprite(textures['background']);
+    let building = new PIXI.Sprite(textures['background']);
     building.width = info.winw;
     building.height = info.winh;
     building.x = 0;
@@ -19,13 +20,13 @@ function scene1(textures){
 
 
     //create title
-    var title = new PIXI.Sprite(textures['title']);
+    let title = new PIXI.Sprite(textures['title']);
     title.anchor.x = title.anchor.y = .5;
     title.x = info.winw/2;
     title.y = info.winh*.3;
 
     //create btn
-    var btn = new PIXI.Sprite(textures['start-btn']);
+    let btn = new PIXI.Sprite(textures['start-btn']);
     btn.anchor.x = btn.anchor.y = .5;
     btn.x = info.winw/2;
     btn.y = info.winh/1.8;
@@ -46,7 +47,7 @@ function scene1(textures){
 function scene2(textures){
     scenes[1] = new PIXI.Container();
 
-    var bgimg = new PIXI.Sprite(textures['background']),
+    let bgimg = new PIXI.Sprite(textures['background']),
         icon = new PIXI.Sprite(textures['score']),
         score = new PIXI.Text(info.score, {
             fontFamily: 'microsoft yahei',
@@ -89,7 +90,7 @@ function scene2(textures){
     life.y = 10;
 
     info.update = function(str){
-        var strs = str.split(/\s+/),
+        let strs = str.split(/\s+/),
             len = strs.length,
             i = 0;
         if(!str){
@@ -110,7 +111,7 @@ function scene2(textures){
 
 function createParticle(){
     ticker = app.timer(dop);
-    var time = 0;
+    let time = 0;
     function dop(){
         time += ticker.elapsedMS;
         if(time > Math.random()*500+500){
@@ -128,9 +129,9 @@ function destroyParticle(){
 }
 
 scene.create = function (id) {
-    if(id == 0){
+    if(id === 0){
         return scene1(ready.source.texture);
-    }else if(id == 1){
+    }else if(id === 1){
         return scene2(ready.source.texture);
     }
 };

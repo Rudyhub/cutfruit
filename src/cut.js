@@ -1,3 +1,4 @@
+const PIXI = require('PIXI');
 const ready = require('./ready');
 const app = require('./app');
 const info = require('./info');
@@ -6,22 +7,22 @@ const gameover = require('./gameover');
 const role = require('./role');
 const audio = require('./audio');
 
-var cutter,
+let cutter,
     roles;
 
-var lines, flag, graphics;
+let lines, flag, graphics;
 function drawline(points){
-    var graphic = new PIXI.Graphics();
+    let graphic = new PIXI.Graphics();
     graphic.clear();
     graphic.lineStyle(1,0xffffff);
     graphic.moveTo(points[0].x,points[0].y);
-    for(var i=1,len=points.length; i<len; i++){
+    for(let i=1,len=points.length; i<len; i++){
         graphic.lineTo(points[i].x, points[i].y);
     }
     app.stage.addChild(graphic);
     graphics.push(graphic);
     if(graphics.length > 1){
-        var a = graphics.shift()
+        let a = graphics.shift()
         app.stage.removeChild(a);
         a.destroy();
     }
@@ -33,7 +34,7 @@ function onstart(se){
         y: se.data.global.y
     });
     flag = true;
-    var ticker = app.timer(dostart);
+    let ticker = app.timer(dostart);
     function dostart(){
         if(flag){
             drawline(lines);
@@ -70,9 +71,9 @@ function onstart(se){
 }
 
 function combine(p){
-    for(var n=0, len=roles.length; n<len; n++){
+    for(let n=0, len=roles.length; n<len; n++){
         if(Math.sqrt(Math.pow( roles[n].x-p.x, 2) + Math.pow(roles[n].y-p.y, 2)) < roles[n].cutRadius){
-            if(roles[n].name == 'boom' && info.status == 'start'){
+            if(roles[n].name === 'boom' && info.status === 'start'){
                 boomgif(roles[n]);
                 return;
             }
@@ -84,7 +85,7 @@ function boomgif(sprite){
     audio('boom');
     info.status = 'over';
     role.destroy();
-    var boomexp = new PIXI.extras.AnimatedSprite( ready.source.gifjson.boom );
+    let boomexp = new PIXI.extras.AnimatedSprite( ready.source.gifjson.boom );
     boomexp.loop = false;
     boomexp.anchor.x = boomexp.anchor.y = .5;
     boomexp.x = sprite.x;
@@ -99,7 +100,7 @@ function boomgif(sprite){
     }
 }
 function cutted(sprite) {
-    if(sprite.name == 'boom') return;
+    if(sprite.name === 'boom') return;
 
     if (!sprite.cutted) {
         sprite.cutted = true;
@@ -113,7 +114,7 @@ function cutted(sprite) {
             break;
             default: audio('cut');
         }
-        if (info.status == 'start') {
+        if (info.status === 'start') {
             info.score++;
             info.update('score');
         }
@@ -121,7 +122,7 @@ function cutted(sprite) {
 }
 function apart(sprite) {
     if(sprite.pieces.length !== 2) return;
-    var pieces = [new PIXI.Sprite(sprite.pieces[0]), new PIXI.Sprite(sprite.pieces[1])],
+    let pieces = [new PIXI.Sprite(sprite.pieces[0]), new PIXI.Sprite(sprite.pieces[1])],
         len = pieces.length,
         i = 0,
         cos = Math.cos(sprite.rotation + Math.PI / 4),
@@ -131,7 +132,7 @@ function apart(sprite) {
     } else if (cos > 0) {
         d = [1, 0];
     } else {
-        var tmpd = Math.random() > 0.5 ? 0 : 1;
+        let tmpd = Math.random() > 0.5 ? 0 : 1;
         d = [tmpd, tmpd];
     }
 
@@ -146,7 +147,7 @@ function apart(sprite) {
         app.stage.addChild(pieces[i]);
     }
 
-    var dr = Math.random() > 0.5 ? 1 : -1;
+    let dr = Math.random() > 0.5 ? 1 : -1;
     app.motion(
         pieces[d[0]],
         sprite.x,
@@ -168,8 +169,8 @@ function apart(sprite) {
         -dr * (Math.random() * 0.03 + 0.02),
     );
 
-    var time = 0;
-    var ticker = app.timer(doapart);
+    let time = 0;
+    let ticker = app.timer(doapart);
     function doapart() {
         time += ticker.elapsedMS;
         if(time > info.time/2){
@@ -197,9 +198,9 @@ function destroy(){
     app.stage.interactive = false;
     app.stage.off('pointerdown',onstart);
     lines.splice(0, lines.length);
-    var i = 0,
+    let i = 0,
         len = graphics.length;
-    for(var i=0; i<len; i++){
+    for(let i=0; i<len; i++){
         graphics[i].destroy();
     }
     graphics.splice(0, len);

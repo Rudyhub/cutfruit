@@ -1,6 +1,4 @@
-const PIXI = require('pixi');
-console.log(PIXI);
-/*const info = require('./info');
+const info = require('./info');
 const app = require('./app');
 const ready = require('./ready');
 const scene = require('./scene');
@@ -11,7 +9,7 @@ const gameover = require('./gameover');
 document.body.appendChild(app.view);
 
 ready.load(function(){
-    var scene1, scene2;
+    let scene1, scene2;
     showScene1();
     function showScene1(){
         try{
@@ -53,7 +51,7 @@ ready.load(function(){
     }
 
     function showRoles(){
-        var roleContainer = role.create();
+        let roleContainer = role.create();
         app.stage.addChild(roleContainer);
         cut.create();
     }
@@ -70,12 +68,11 @@ ready.load(function(){
     //针对ios，需要预播放一次
     document.addEventListener('touchstart',function onceplay(){
         document.removeEventListener('touchstart', onceplay, false);
-        for(var k in ready.source.audio){
-            ;(function(audio){
+        for(let k in ready.source.audio){
+            (function(audio){
                 audio.setAttribute('src','audio/test.mp3');
                 audio.play();
             })(document.getElementById(k));
         }
     },false);
 });
-*/

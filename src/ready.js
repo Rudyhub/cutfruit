@@ -1,7 +1,8 @@
+const PIXI = require('PIXI');
 const app = require('./app');
 const info = require('./info');
 
-var back = {
+let back = {
     load: ready,
     source: null
 };
@@ -11,7 +12,7 @@ var back = {
  * @param complete 加载完成时执行
  */
 function ready(complete){
-    var source = {
+    let source = {
             img: ['background.jpg','game-over.png',
                 'score.png','shadow.png','start-btn.png','title.png',
                 'apple.png','apple-1.png','apple-2.png','banana.png','banana-1.png','banana-2.png',
@@ -24,9 +25,9 @@ function ready(complete){
                 ['boomgif.json','boom',26]
             ]
         },
-        imgpath = 'img/',
-        gifpath = 'gifjson/',
-        audiopath = 'audio/',
+        imgpath = 'static/img/',
+        gifpath = 'static/gifjson/',
+        audiopath = 'static/audio/',
         percent = new PIXI.Text('    0%    ', {
             fontFamily: 'microsoft yahei',
             fontSize: 20,
@@ -49,11 +50,11 @@ function ready(complete){
         percent.anchor.x = percent.anchor.y = .5;
     app.stage.addChild(percent);
     function loadimg(){
-        var imgs = source.img,
+        let imgs = source.img,
             loaded = 0;
-        for(var i=0,len = imgs.length; i<len; i++){
-            ;(function(n,loader){
-                var name = imgs[n].slice(0,imgs[n].lastIndexOf('.'));
+        for(let i=0,len = imgs.length; i<len; i++){
+            (function(n,loader){
+                let name = imgs[n].slice(0,imgs[n].lastIndexOf('.'));
                 loader.add(name, imgpath + imgs[n]).load(function(that, source){
                     loaded++;
                     loader.destroy();
@@ -70,16 +71,16 @@ function ready(complete){
         }
     }
     function loadgif(){
-        var gif = source.gifjson,
+        let gif = source.gifjson,
             loaded = 0;
-        for(var i=0, len=gif.length; i<len; i++){
-            ;(function(n, loader){
+        for(let i=0, len=gif.length; i<len; i++){
+            (function(n, loader){
                 loader.add('spritesheet', gifpath + gif[n][0] ).load(function(){
                     loaded++;
                     loader.destroy();
 
-                    for (var j = 0, jlen = gif[n][2]; j < jlen; j++) {
-                        var texture = PIXI.Texture.fromFrame(gif[n][1] + (j+1) + '.png');
+                    for (let j = 0, jlen = gif[n][2]; j < jlen; j++) {
+                        let texture = PIXI.Texture.fromFrame(gif[n][1] + (j+1) + '.png');
                         back.source.gifjson.boom.push(texture);
                     }
                     percent.text = 'Effect ' + Math.round((loaded / len) * 100) + '%';
@@ -94,10 +95,10 @@ function ready(complete){
         }
     }
     function loadaudio(){
-        var audios = source.audio,
+        let audios = source.audio,
             loaded = 0;
-        for(var i=0,len=audios.length; i<len; i++){
-            var audio = document.createElement('audio');
+        for(let i=0,len=audios.length; i<len; i++){
+            let audio = document.createElement('audio');
             audio.setAttribute('src',audiopath + audios[i] +'.mp3');
             audio.setAttribute('preload', 'true');
             audio.id = audios[i];
@@ -118,5 +119,5 @@ function ready(complete){
         }
     }
     loadimg();
-};
+}
 module.exports = back;

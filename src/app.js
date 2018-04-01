@@ -1,3 +1,4 @@
+const PIXI = require('PIXI');
 const info = require('./info');
 /**
  * App 继承 PIXI.Application
@@ -14,7 +15,7 @@ class App extends PIXI.Application{
      * @returns {Ticker|*}
      */
     timer(fn){
-        var ticker = new PIXI.ticker.Ticker();
+        let ticker = new PIXI.ticker.Ticker();
         ticker.add(fn);
         this.timers.push(ticker);
         return ticker;
@@ -41,8 +42,8 @@ class App extends PIXI.Application{
      * @param fn 回调
      */
     animate(obj,options,fn){
-        if(!obj || typeof options != 'object') return;
-        var o0 = {
+        if(!obj || typeof options !== 'object') return;
+        let o0 = {
                 width: obj.width,
                 height: obj.height,
                 alpha: obj.alpha,
@@ -53,25 +54,25 @@ class App extends PIXI.Application{
             },
             ot = {duration: 800},
             v = {};
-        for(var k in options){
-            if(typeof options[k] === 'number') ot[k] = options[k];
+        for(let key in options){
+            if(typeof options[key] === 'number') ot[key] = options[key];
         }
         options = null;
-        var dur = ot.duration;
+        let dur = ot.duration;
         delete ot.duration;
 
-        for( var k in ot){
+        for( let k in ot){
             v[k] = (ot[k] - o0[k])/dur;
         }
 
-        var t = 0,
+        let t = 0,
             _this = this;
 
-        var ticker = _this.timer(doanm);
+        let ticker = _this.timer(doanm);
         function doanm(){
-            var delta = ticker.elapsedMS;
+            let delta = ticker.elapsedMS;
 
-            for(var n in ot){
+            for(let n in ot){
                 obj[n] += v[n]*delta;
             }
             t += delta;
@@ -123,7 +124,7 @@ class App extends PIXI.Application{
     }
 }
 
-var app = new App({
+let app = new App({
     width: info.winw,
     height: info.winh,
     backgroundColor: 0x000000

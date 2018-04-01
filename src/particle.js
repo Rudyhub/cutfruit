@@ -1,7 +1,7 @@
-var app = require('./app');
-var info = require('./info');
+const PIXI = require('PIXI');
+const app = require('./app');
 function create(x,y,num,color) {
-    var points = [],
+    let points = [],
         container = new PIXI.Container(),
         dur = 1000,
         time = 0;
@@ -10,14 +10,14 @@ function create(x,y,num,color) {
     color = color || 0xbb0000;
 
     container.name = 'particle';
-    for(var i=0; i<num; i++){
+    for(let i=0; i<num; i++){
         points[i] = new PIXI.Graphics();
         points[i].lineStyle(0);
         points[i].beginFill(color, Math.random()*.6+.4);
         points[i].drawCircle(x, y, Math.random()*3+2);
         points[i].endFill();
 
-        var a = Math.random()*360;
+        let a = Math.random()*360;
         points[i].Vx = Math.sin(a*180/Math.PI)*Math.random()*12;
         points[i].Vy = Math.cos(a*180/Math.PI)*Math.random()*12;
 
@@ -26,7 +26,7 @@ function create(x,y,num,color) {
 
     app.stage.addChild(container);
 
-    var ticker = app.timer(doparticle);
+    let ticker = app.timer(doparticle);
     function doparticle(){
         time += ticker.elapsedMS;
 
@@ -43,11 +43,11 @@ function create(x,y,num,color) {
 }
 
 function destroy(){
-    var containers = app.stage.children,
+    let containers = app.stage.children,
         i=0,
         len = containers.length;
     for(; i<len; i++){
-        if(containers[i].name == 'particle'){
+        if(containers[i].name === 'particle'){
             containers[i].destroy();
         }
     }
