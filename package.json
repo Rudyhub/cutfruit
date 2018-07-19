@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "a game, cutting fruits",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "author": "mysterman",
   "license": "ISC",
   "devDependencies": {
@@ -15,6 +13,6 @@
     "babili-webpack-plugin": "^0.1.2",
     "css-loader": "^0.28.7",
     "style-loader": "^0.18.2",
-    "webpack": "^3.6.0"
+    "webpack": "^3.12.0"
   }
 }

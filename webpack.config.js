@@ -1,17 +1,18 @@
+const path = require('path');
 const BabiliPlugin = require("babili-webpack-plugin");
 module.exports = {
-    entry:  __dirname + "/src/main.js",
+    entry:  path.join(__dirname,'src', 'main.js'),
     output: {
-        path: __dirname,
+        path: path.join(__dirname, 'dist'),
         filename: "cutfruit.js"
     },
     module:{
-        loaders: [
-            { test: /\.css$/, loader: "style-loader!css-loader" },
+        rules: [
+            { test: /\.css$/, use: "style-loader!css-loader" },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
+                use: 'babel-loader'
             }
         ]
     },

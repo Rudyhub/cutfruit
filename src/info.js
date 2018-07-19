@@ -15,8 +15,8 @@ const info = {
     best: 0,
     max: 6,
     min: 1,
-    scoreTxt: 'YOUR BEST  ',
-    lifeTxt: 'LIFE NUM  ',
+    scoreTxt: 'BEST  ',
+    lifeTxt: 'LIVES  ',
     status: 'wait',
     update: null,
     reset: function(){
